@@ -5,6 +5,8 @@ import {
   CardContent,
   Chip,
   Button,
+  Grid,
+  Container,
 } from "@mui/material";
 import CalendarTodayOutlined from "@mui/icons-material/CalendarTodayOutlined";
 import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
@@ -15,6 +17,7 @@ interface BlogArticle {
   excerpt: string;
   date: string;
   readTime: string;
+  image: string;
 }
 
 const articles: BlogArticle[] = [
@@ -25,6 +28,7 @@ const articles: BlogArticle[] = [
       "Discover the essential quality assurance practices that help FinTech companies maintain reliability and security at scale.",
     date: "Nov 20, 2024",
     readTime: "5 min read",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
   },
   {
     tag: "Automation",
@@ -33,6 +37,7 @@ const articles: BlogArticle[] = [
       "A comprehensive guide to setting up automated testing infrastructure that scales with your product.",
     date: "Nov 15, 2024",
     readTime: "8 min read",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800",
   },
   {
     tag: "Strategy",
@@ -41,47 +46,85 @@ const articles: BlogArticle[] = [
       "Learn why early investment in QA saves money, time, and reputation in the long run.",
     date: "Nov 10, 2024",
     readTime: "6 min read",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
   },
 ];
 
-const BlogCard = ({ tag, title, excerpt, date, readTime }: BlogArticle) => (
+const BlogCard = ({ tag, title, excerpt, date, readTime, image }: BlogArticle) => (
   <Card
-    variant="outlined"
+    elevation={0}
     sx={{
-      width: 360,
-      p: 2,
-      borderRadius: "16px",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+      height: "100%",
+      borderRadius: 4,
+      border: "1px solid",
+      borderColor: "divider",
+      backgroundColor: "rgba(255, 255, 255, 0.5)",
+      backdropFilter: "blur(4px)",
+      transition: "all 0.3s ease",
+      overflow: "hidden",
+      "&:hover": {
+        transform: "translateY(-8px)",
+        boxShadow: "0 12px 20px -10px rgba(0,0,0,0.1)",
+        borderColor: "primary.main",
+      },
     }}
   >
-    <CardContent>
+    <Box
+      sx={{
+        height: 200,
+        width: "100%",
+        backgroundImage: `url(${image})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    />
+    <CardContent sx={{ p: 4, display: "flex", flexDirection: "column", height: "calc(100% - 200px)" }}>
       <Chip
         label={tag}
         size="small"
+        sx={{
+          borderRadius: 1,
+          mb: 2,
+          fontWeight: 700,
+          fontSize: 10,
+          textTransform: "uppercase",
+          letterSpacing: 0.5,
+          color: "primary.main",
+          borderColor: "primary.light",
+          alignSelf: "flex-start",
+        }}
         variant="outlined"
-        sx={{ borderRadius: "6px", mb: 2 }}
       />
 
-      <Typography fontWeight={600}>{title}</Typography>
+      <Typography variant="h6" sx={{ fontWeight: 800, mb: 1.5, lineHeight: 1.3 }}>
+        {title}
+      </Typography>
 
       <Typography
-        color="text.secondary"
-        fontSize="14px"
-        mt={1}
-        lineHeight="20px"
+        variant="body2"
+        sx={{
+          color: "text.secondary",
+          lineHeight: 1.6,
+          mb: 3,
+          flexGrow: 1,
+        }}
       >
         {excerpt}
       </Typography>
 
-      <Box mt={3} display="flex" alignItems="center" gap={2}>
-        <Box display="flex" alignItems="center" gap={1}>
-          <CalendarTodayOutlined sx={{ fontSize: 16 }} />
-          <Typography fontSize="13px">{date}</Typography>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 3, mt: "auto" }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+          <CalendarTodayOutlined sx={{ fontSize: 14, color: "text.secondary" }} />
+          <Typography variant="caption" sx={{ fontWeight: 600, color: "text.secondary" }}>
+            {date}
+          </Typography>
         </Box>
 
-        <Box display="flex" alignItems="center" gap={1}>
-          <AccessTimeOutlined sx={{ fontSize: 16 }} />
-          <Typography fontSize="13px">{readTime}</Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+          <AccessTimeOutlined sx={{ fontSize: 14, color: "text.secondary" }} />
+          <Typography variant="caption" sx={{ fontWeight: 600, color: "text.secondary" }}>
+            {readTime}
+          </Typography>
         </Box>
       </Box>
     </CardContent>
@@ -90,28 +133,49 @@ const BlogCard = ({ tag, title, excerpt, date, readTime }: BlogArticle) => (
 
 export default function FeaturedBlogInsights() {
   return (
-    <Box py={10} display="flex" flexDirection="column" alignItems="center">
-      <Typography variant="h5" fontWeight={700}>
-        Featured Blog / Insights
-      </Typography>
+    <Box sx={{ width: "100%", py: { xs: 10, md: 15 } }}>
+      <Container maxWidth="lg">
+        <Box sx={{ textAlign: "center", mb: 8 }}>
+          <Typography variant="h4" sx={{ fontWeight: 800, mb: 2 }}>
+            Featured Blog & Insights
+          </Typography>
+          <Typography variant="body1" sx={{ color: "text.secondary", mb: 4 }}>
+            Expert insights on quality assurance and software testing
+          </Typography>
+          <Box sx={{ width: 60, height: 4, bgcolor: "primary.main", mx: "auto", borderRadius: 2 }} />
+        </Box>
 
-      <Typography mt={1} mb={5} color="text.secondary">
-        Expert insights on quality assurance and software testing
-      </Typography>
+        <Grid container spacing={4}>
+          {articles.map((a, i) => (
+            <Grid item xs={12} sm={6} md={4} key={i}>
+              <BlogCard {...a} />
+            </Grid>
+          ))}
+        </Grid>
 
-      <Box display="flex" flexWrap="nowrap" overflow="auto" gap={3}>
-        {articles.map((a, i) => (
-          <BlogCard key={i} {...a} />
-        ))}
-      </Box>
-
-      <Button
-        variant="outlined"
-        sx={{ mt: 6, borderRadius: "8px", px: 3, py: 1 }}
-        endIcon={<span>→</span>}
-      >
-        View All Articles
-      </Button>
+        <Box sx={{ mt: 8, textAlign: "center" }}>
+          <Button
+            variant="outlined"
+            size="large"
+            endIcon={<span>→</span>}
+            sx={{
+              borderRadius: 2,
+              px: 4,
+              py: 1.5,
+              fontWeight: 700,
+              color: "text.primary",
+              borderColor: "divider",
+              backgroundColor: "white",
+              "&:hover": {
+                borderColor: "primary.main",
+                backgroundColor: "rgba(36, 84, 255, 0.04)",
+              },
+            }}
+          >
+            View All Articles
+          </Button>
+        </Box>
+      </Container>
     </Box>
   );
 }

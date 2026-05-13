@@ -2,6 +2,8 @@ import {
   Box,
   Typography,
   Paper,
+  Grid,
+  Container,
 } from "@mui/material";
 
 // OUTLINE ICONS
@@ -16,150 +18,146 @@ import SettingsOutlined from "@mui/icons-material/SettingsOutlined";
 import SchoolOutlined from "@mui/icons-material/SchoolOutlined";
 
 export default function WhyWorkWithTestify() {
-  return (
-    <Box
-      sx={{
-        width: "100%",
-        bgcolor: "#ffffff",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        pt: "60px",
-        pb: "80px",
-      }}
-    >
-      {/* TITLE */}
-      <Typography sx={{ fontSize: "22px", fontWeight: 700, mb: "40px" }}>
-        Why Work With Testify
-      </Typography>
+  const whyItems = [
+    {
+      icon: <BoltOutlined sx={{ fontSize: 34, color: "primary.main" }} />,
+      title: "Super Fast Onboarding",
+      text: "Smooth onboarding that lets your team start seeing value quickly.",
+    },
+    {
+      icon: <PublicOutlined sx={{ fontSize: 34, color: "primary.main" }} />,
+      title: "Global Expertise",
+      text: "Top-tier global professionals delivering solutions tailored to your unique product needs.",
+    },
+    {
+      icon: <DescriptionOutlined sx={{ fontSize: 34, color: "primary.main" }} />,
+      title: "Flexible Contracts",
+      text: `• Retainer-Based – ideal for ongoing support
+• Project-Based – for well-defined projects
+• Hybrid – for evolving projects`,
+      preserve: true,
+    },
+    {
+      icon: <TrendingUpOutlined sx={{ fontSize: 34, color: "primary.main" }} />,
+      title: "Proven Results",
+      text: "Over 300 clients and a 100% satisfaction rate across various industries.",
+    },
+  ];
 
-      {/* TOP ROW */}
-      <Box sx={{ display: "flex", gap: "24px", mb: "80px" }}>
-        {[
-          {
-            icon: <BoltOutlined sx={{ fontSize: 34, color: "#4f7df3" }} />,
-            title: "Super Fast Onboarding",
-            text: "Smooth onboarding that lets your team start seeing value quickly.",
-          },
-          {
-            icon: <PublicOutlined sx={{ fontSize: 34, color: "#4f7df3" }} />,
-            title: "Global Expertise",
-            text: "Top-tier global professionals delivering solutions tailored to your unique product needs.",
-          },
-          {
-            icon: (
-              <DescriptionOutlined sx={{ fontSize: 34, color: "#4f7df3" }} />
-            ),
-            title: "Flexible Contracts",
-            text: `• Retainer-Based – ideal for ongoing support or continuous QA
-• Project-Based – for well-defined, time-bound projects
-• Hybrid – for evolving projects needing flexible scope and pricing`,
-            preserve: true,
-          },
-          {
-            icon: <TrendingUpOutlined sx={{ fontSize: 34, color: "#4f7df3" }} />,
-            title: "Proven Results",
-            text: "Over 300 clients, 72+ product launches, and a 100% satisfaction rate.",
-          },
-        ].map((item, i) => (
+  const servicesItems = [
+    {
+      icon: <ShieldOutlined sx={{ fontSize: 34, color: "primary.main" }} />,
+      title: "Software Testing",
+      text: "Comprehensive testing services including functional, performance, security, and automation testing to ensure flawless product delivery.",
+    },
+    {
+      icon: <BusinessCenterOutlined sx={{ fontSize: 34, color: "primary.main" }} />,
+      title: "Project Management",
+      text: "Expert project delivery using Agile methodologies, risk management, and resource optimization for successful product launches.",
+    },
+    {
+      icon: <SettingsOutlined sx={{ fontSize: 34, color: "primary.main" }} />,
+      title: "Process Setup & Team Augmentation",
+      text: "Implement best practices, establish QMS, and augment your team with skilled QA professionals to scale efficiently.",
+    },
+    {
+      icon: <SchoolOutlined sx={{ fontSize: 34, color: "primary.main" }} />,
+      title: "QA Coaching & Training",
+      text: "Upskill your team with customized training programs, workshops, and coaching sessions tailored to your needs.",
+    },
+  ];
+
+  const renderCards = (items: typeof whyItems | typeof servicesItems) => (
+    <Grid container spacing={3} justifyContent="center">
+      {items.map((item, i) => (
+        <Grid item xs={12} sm={6} md={3} key={i}>
           <Paper
-            key={i}
             elevation={0}
             sx={{
-              width: "230px",
-              p: "24px",
-              borderRadius: "12px",
-              border: "1px solid #e5e7eb",
+              height: "100%",
+              p: 4,
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: "divider",
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+              backdropFilter: "blur(4px)",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                transform: "translateY(-8px)",
+                boxShadow: "0 12px 20px -10px rgba(0,0,0,0.1)",
+                borderColor: "primary.light",
+              },
             }}
           >
-            {item.icon}
-
-            <Typography sx={{ fontSize: "17px", fontWeight: 600, mt: 2, mb: 1 }}>
+            <Box sx={{ mb: 2 }}>{item.icon}</Box>
+            <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5, lineHeight: 1.3 }}>
               {item.title}
             </Typography>
-
             <Typography
+              variant="body2"
               sx={{
-                fontSize: "14px",
-                color: "#4b5563",
-                whiteSpace: item.preserve ? "pre-line" : "normal",
+                color: "text.secondary",
+                lineHeight: 1.6,
+                whiteSpace: (item as any).preserve ? "pre-line" : "normal",
               }}
             >
               {item.text}
             </Typography>
           </Paper>
-        ))}
+        </Grid>
+      ))}
+    </Grid>
+  );
+
+  return (
+    <Container maxWidth="lg" sx={{ py: { xs: 10, md: 15 } }}>
+      {/* WHY SECTION */}
+      <Box sx={{ textAlign: "center", mb: 10 }}>
+        <Typography variant="h4" sx={{ fontWeight: 800, mb: 2 }}>
+          Why Work With Testify
+        </Typography>
+        <Box sx={{ width: 60, height: 4, bgcolor: "primary.main", mx: "auto", borderRadius: 2 }} />
       </Box>
+
+      {renderCards(whyItems)}
 
       {/* SERVICES SECTION */}
-      <Typography sx={{ fontSize: "22px", fontWeight: 700 }}>
-        Our Services
-      </Typography>
-
-      <Typography
-        sx={{
-          textAlign: "center",
-          maxWidth: "550px",
-          mt: "8px",
-          mb: "40px",
-          color: "#4b5563",
-          fontSize: "15px",
-        }}
-      >
-        End-to-end quality engineering solutions tailored to your product's
-        unique requirements.
-      </Typography>
-
-      {/* BOTTOM ROW */}
-      <Box sx={{ display: "flex", gap: "24px" }}>
-        {[
-          {
-            icon: <ShieldOutlined sx={{ fontSize: 34, color: "#4f7df3" }} />,
-            title: "Software Testing",
-            text: "Comprehensive testing services including functional, performance, security, and automation testing to ensure flawless product delivery.",
-          },
-          {
-            icon: (
-              <BusinessCenterOutlined
-                sx={{ fontSize: 34, color: "#4f7df3" }}
-              />
-            ),
-            title: "Project Management",
-            text: "Expert project delivery using Agile methodologies, risk management, and resource optimization for successful product launches.",
-          },
-          {
-            icon: <SettingsOutlined sx={{ fontSize: 34, color: "#4f7df3" }} />,
-            title: "Process Setup & Team Augmentation",
-            text: "Implement best practices, establish QMS, and augment your team with skilled QA professionals to scale efficiently.",
-          },
-          {
-            icon: <SchoolOutlined sx={{ fontSize: 34, color: "#4f7df3" }} />,
-            title: "QA Coaching & Corporate Training",
-            text: "Upskill your team with customized training programs, workshops, and coaching sessions tailored to your needs.",
-          },
-        ].map((item, i) => (
-          <Paper
-            key={i}
-            elevation={0}
-            sx={{
-              width: "230px",
-              p: "24px",
-              borderRadius: "12px",
-              border: "1px solid #e5e7eb",
-            }}
-          >
-            {item.icon}
-
-            <Typography sx={{ fontSize: "17px", fontWeight: 600, mt: 2, mb: 1 }}>
-              {item.title}
+      <Box sx={{ mt: { xs: 12, md: 18 }, mb: 8 }}>
+        <Grid container spacing={6} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <Typography variant="h4" sx={{ fontWeight: 800, mb: 3 }}>
+              Our Services
             </Typography>
-
-            <Typography sx={{ fontSize: "14px", color: "#4b5563" }}>
-              {item.text}
+            <Typography
+              variant="body1"
+              sx={{
+                color: "text.secondary",
+                mb: 4,
+                lineHeight: 1.8,
+              }}
+            >
+              End-to-end quality engineering solutions tailored to your product's
+              unique requirements. We provide the expertise and tools needed to
+              deliver flawless software at scale.
             </Typography>
-          </Paper>
-        ))}
+            <Box sx={{ width: 60, height: 4, bgcolor: "primary.main", borderRadius: 2 }} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box
+              component="img"
+              src="https://images.unsplash.com/photo-1522071823991-b9671f99c1ae?auto=format&fit=crop&q=80&w=1200"
+              alt="Our Services"
+              sx={{
+                width: "100%",
+                borderRadius: 4,
+                boxShadow: "0 20px 40px -20px rgba(0,0,0,0.2)",
+              }}
+            />
+          </Grid>
+        </Grid>
       </Box>
-    </Box>
+
+      {renderCards(servicesItems)}
+    </Container>
   );
 }

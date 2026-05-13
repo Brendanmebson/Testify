@@ -9,10 +9,19 @@ import AboutUs from "./pages/AboutUs";
 import Blog from "./pages/Blog";
 import BookConsultation from "./pages/BookConsultation";
 
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "./theme";
+
+import ScrollToTop from "./components/common/ScrollToTop";
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
         {/* Layout as wrapper */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
@@ -30,6 +39,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

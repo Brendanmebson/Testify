@@ -13,8 +13,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-
-const services = [
+const servicesList = [
   "Functional Testing",
   "Security Testing",
   "Automation Testing",
@@ -28,7 +27,14 @@ const services = [
 ];
 
 const BookConsultation = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [company, setCompany] = useState("");
+  const [duration, setDuration] = useState("3-6 Months");
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const toggleService = (service: string) => {
     setSelectedServices((prev) =>
@@ -36,6 +42,63 @@ const BookConsultation = () => {
         ? prev.filter((s) => s !== service)
         : [...prev, service]
     );
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Build the data object to send
+    const formData = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      company,
+      duration,
+      services: selectedServices,
+    };
+
+    try {
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbykkxtmRm0_N1O8CRv5fyBRpjU7ewGz5h9nMnrxZIks2RZ0LZkFXoTUo7fQQWg4kh8tsg/exec",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: `${firstName} ${lastName}`,
+            email,
+            message: JSON.stringify(formData), // sends all fields in one message
+          }),
+        }
+      );
+
+      const data = await response.json();
+      console.log("CRM Response:", data);
+      alert("Successfully sent to CRM! ✅");
+
+      // Optional: open Calendly after submission
+      window.open(
+        "https://calendly.com/judom-2011/testify-consultation-call",
+        "_blank"
+      );
+
+      // Clear form
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPhone("");
+      setCompany("");
+      setDuration("3-6 Months");
+      setSelectedServices([]);
+    } catch (error) {
+      console.error("CRM Error:", error);
+      alert("Successfully sent to CRM 😢");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -53,6 +116,8 @@ const BookConsultation = () => {
 
       {/* Main Content */}
       <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
           display: "flex",
           gap: 3,
@@ -77,11 +142,40 @@ const BookConsultation = () => {
           </Typography>
 
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-            <TextField fullWidth label="First Name" required />
-            <TextField fullWidth label="Last Name" required />
-            <TextField fullWidth label="Corporate Email" required />
-            <TextField fullWidth label="Contact Number" required />
-            <TextField fullWidth label="Company Website" />
+            <TextField
+              fullWidth
+              label="First Name"
+              required
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              label="Last Name"
+              required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              label="Corporate Email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              label="Contact Number"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              label="Company Website"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+            />
           </Box>
 
           <TextField
@@ -89,7 +183,8 @@ const BookConsultation = () => {
             fullWidth
             label="Estimated Project Duration"
             sx={{ mt: 2 }}
-            defaultValue="3-6 Months"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
           >
             <MenuItem value="1-3 Months">1-3 Months</MenuItem>
             <MenuItem value="3-6 Months">3-6 Months</MenuItem>
@@ -104,7 +199,7 @@ const BookConsultation = () => {
           </Typography>
 
           <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-            {services.map((service) => (
+            {servicesList.map((service) => (
               <Box key={service} sx={{ width: { xs: "100%", md: "50%" } }}>
                 <FormControlLabel
                   control={
@@ -119,25 +214,23 @@ const BookConsultation = () => {
             ))}
           </Box>
 
-<Button
-  fullWidth
-  variant="contained"
-  href="https://calendly.com/judom-2011/testify-consultation-call"
-  target="_blank"
-  rel="noopener noreferrer"
-  sx={{
-    mt: 3,
-    background: "#2563EB",
-    borderRadius: "10px",
-    py: 1.2,
-    fontSize: 14,
-    textTransform: "none",
-    "&:hover": { background: "#1D4ED8" },
-  }}
->
-  Submit Consultation Request
-</Button>
-
+          <Button
+            fullWidth
+            type="submit"
+            variant="contained"
+            sx={{
+              mt: 3,
+              background: "#2563EB",
+              borderRadius: "10px",
+              py: 1.2,
+              fontSize: 14,
+              textTransform: "none",
+              "&:hover": { background: "#1D4ED8" },
+            }}
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Submit Consultation Request"}
+          </Button>
 
           <Typography sx={{ mt: 1, fontSize: 12, textAlign: "center", color: "#64748B" }}>
             We'll respond within 24 hours
@@ -177,20 +270,14 @@ const BookConsultation = () => {
               background: "#EFF6FF",
             }}
           >
-            <Typography sx={{ fontWeight: 600, mb: 2 }}>
-              What to Expect
-            </Typography>
-
+            <Typography sx={{ fontWeight: 600, mb: 2 }}>What to Expect</Typography>
             {[
               "24-hour Response",
               "Discovery Call",
               "Tailored Proposal",
               "No Obligation",
             ].map((item) => (
-              <Box
-                key={item}
-                sx={{ display: "flex", gap: 1.2, mb: 1.5 }}
-              >
+              <Box key={item} sx={{ display: "flex", gap: 1.2, mb: 1.5 }}>
                 <CheckCircleOutlineIcon color="primary" />
                 <Typography sx={{ fontSize: 13 }}>{item}</Typography>
               </Box>
@@ -208,9 +295,7 @@ const BookConsultation = () => {
                 <Typography sx={{ fontWeight: 700, color: "#2563EB" }}>
                   {stat.value}
                 </Typography>
-                <Typography sx={{ fontSize: 12 }}>
-                  {stat.label}
-                </Typography>
+                <Typography sx={{ fontSize: 12 }}>{stat.label}</Typography>
               </Box>
             ))}
           </Card>

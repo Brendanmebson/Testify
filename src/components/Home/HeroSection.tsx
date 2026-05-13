@@ -9,19 +9,26 @@ const HeroSection: React.FC = () => {
     <Box
       sx={{
         width: "100%",
-        background: "#F7FAFF",
-        py: { xs: 8, md: 12 },
+        py: { xs: 15, md: 25 },
         px: { xs: 2, md: 6 },
+        textAlign: { xs: "center", md: "left" },
+        position: "relative",
+        backgroundImage: 'linear-gradient(to right, rgba(15, 23, 42, 0.95) 30%, rgba(15, 23, 42, 0.4)), url("https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        color: "white",
+        mb: 10,
       }}
     >
       {/* Top Badge */}
       <Typography
+        variant="overline"
         sx={{
-          color: "#2454FF",
-          fontWeight: 700,
-          fontSize: ".9rem",
-          letterSpacing: 1,
-          mb: 1,
+          color: "primary.light",
+          fontWeight: 800,
+          letterSpacing: 2,
+          mb: 2,
+          display: "block",
         }}
       >
         TESTIFY
@@ -29,11 +36,14 @@ const HeroSection: React.FC = () => {
 
       {/* Headline */}
       <Typography
+        variant="h1"
         sx={{
-          fontSize: { xs: "2rem", md: "2.8rem" },
-          fontWeight: 800,
-          maxWidth: 800,
-          lineHeight: 1.25,
+          fontSize: { xs: "2.25rem", md: "3.5rem" },
+          fontWeight: 900,
+          maxWidth: 900,
+          lineHeight: 1.1,
+          mb: 3,
+          mx: { xs: "auto", md: 0 },
         }}
       >
         Product Quality Engineering & Software Testing You Can Trust
@@ -41,110 +51,115 @@ const HeroSection: React.FC = () => {
 
       {/* Subtext */}
       <Typography
+        variant="body1"
         sx={{
-          mt: 2,
           maxWidth: 720,
-          fontSize: "1.1rem",
-          color: "#4B5563",
+          fontSize: { xs: "1.05rem", md: "1.2rem" },
+          color: "rgba(255, 255, 255, 0.7)",
           lineHeight: 1.8,
+          mb: 5,
+          mx: { xs: "auto", md: 0 },
         }}
       >
-        We help product-led companies; fintechs, telecoms, government teams, and
-        high-growth startups, launch reliable, scalable, high-quality software
+        We help product-led companies launch reliable, scalable, high-quality software
         through expert QA testing, project management, process setup, and
         coaching.
       </Typography>
 
       {/* Buttons */}
-      <Box sx={{ display: "flex", gap: 2, mt: 4, flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", gap: 2, mb: 8, flexWrap: "wrap", justifyContent: { xs: "center", md: "flex-start" } }}>
         <Button
           variant="contained"
-          endIcon={<span style={{ fontSize: "1.2rem" }}>→</span>}
+          size="large"
+          endIcon={<span>→</span>}
           sx={{
-            background: "#2454FF",
-            textTransform: "none",
-            px: 3,
-            py: 1.4,
-            borderRadius: 2,
-            fontWeight: 600,
+            py: 1.8,
+            px: 4,
             fontSize: "1rem",
+            boxShadow: "0 10px 15px -3px rgba(36, 84, 255, 0.3)",
           }}
         >
-          Book a Free Consultation
+          Book a Consultation
         </Button>
 
         <Button
           variant="outlined"
+          size="large"
           sx={{
-            borderColor: "#D0D5DD",
-            textTransform: "none",
-            px: 3,
-            py: 1.4,
-            borderRadius: 2,
-            fontWeight: 600,
+            py: 1.8,
+            px: 4,
             fontSize: "1rem",
-            background: "#fff",
+            backgroundColor: "white",
+            borderColor: "divider",
+            color: "text.primary",
+            "&:hover": {
+              borderColor: "primary.main",
+              backgroundColor: "rgba(36, 84, 255, 0.04)",
+            },
           }}
         >
           Drop Us a Message
         </Button>
       </Box>
 
-{/* Stats - FLEX row only */}
-<Box
-  sx={{
-    mt: 6,
-    display: "flex",
-    gap: 3,
-    maxWidth: 1000,
-    alignItems: "center",
-    marginRight: "auto",  
-    marginLeft: "auto",
-    width: "100%",
-    justifyContent: "space-between", // distribute evenly
-  }}
->
-  {[
-    { value: "30+", label: "Trusted Clients" },
-    { value: "72+", label: "Successful Product Launches" },
-    { value: "100%", label: "Client Satisfaction" },
-  ].map((item, index) => (
-    <Card
-      key={index}
-      elevation={0}
-      sx={{
-        flex: "1 1 0", // each takes equal space
-        p: 3,
-        borderRadius: 3,
-        textAlign: "center",
-        border: "1px solid #E5E7EB",
-      }}
-    >
-      <Typography
+      {/* Stats - Grid for better responsiveness */}
+      <Box
         sx={{
-          fontSize: "2rem",
-          fontWeight: 800,
-          color: "#2454FF",
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "repeat(3, 1fr)" },
+          gap: 3,
+          maxWidth: 1100,
+          mb: 8,
         }}
       >
-        {item.value}
-      </Typography>
+        {[
+          { value: "30+", label: "Trusted Clients" },
+          { value: "72+", label: "Successful Launches" },
+          { value: "100%", label: "Satisfaction Rate" },
+        ].map((item, index) => (
+          <Card
+            key={index}
+            elevation={0}
+            sx={{
+              p: 4,
+              borderRadius: 4,
+              textAlign: "center",
+              border: "1px solid",
+              borderColor: "divider",
+              background: "rgba(255, 255, 255, 0.5)",
+              backdropFilter: "blur(4px)",
+              transition: "transform 0.3s ease",
+              "&:hover": { transform: "translateY(-5px)" },
+            }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                color: "primary.main",
+                fontWeight: 800,
+                mb: 1,
+              }}
+            >
+              {item.value}
+            </Typography>
 
-      <Typography sx={{ color: "#6B7280", mt: 1 }}>
-        {item.label}
-      </Typography>
-    </Card>
-  ))}
-</Box>
-
+            <Typography variant="body2" sx={{ color: "text.secondary", fontWeight: 600 }}>
+              {item.label}
+            </Typography>
+          </Card>
+        ))}
+      </Box>
 
       {/* Trusted By */}
       <Typography
+        variant="subtitle2"
         sx={{
           textAlign: "center",
-          mt: 6,
-          color: "#6B7280",
-          fontSize: ".9rem",
+          color: "text.secondary",
+          mb: 4,
+          fontWeight: 700,
+          textTransform: "uppercase",
+          letterSpacing: 1,
         }}
       >
         Trusted by Africa's Leading Product Teams
@@ -154,16 +169,15 @@ const HeroSection: React.FC = () => {
       <Box
         component="img"
         src={company}
-        alt="Banks logos"
+        alt="Partner companies"
         sx={{
-          color: "#d64343f3",
-          alignContent: "center",
           display: "block",
           mx: "auto",
-          mt: 3,
           width: "100%",
-          maxWidth: 600,
-          opacity: 1,
+          maxWidth: 800,
+          filter: "grayscale(100%) invert(100%) opacity(0.6)",
+          transition: "all 0.3s ease",
+          "&:hover": { filter: "grayscale(0%) invert(0%) opacity(1)" },
         }}
       />
     </Box>
