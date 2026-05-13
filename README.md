@@ -1,6 +1,6 @@
 <div align="center">
-  <svg width="400" height="60" viewBox="0 0 400 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="48" letter-spacing="4" fill="#2454FF">TESTIFY</text>
+  <svg width="600" height="100" viewBox="0 0 600 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="950" font-size="72" letter-spacing="6" fill="#2454FF">TESTIFY</text>
   </svg>
   <p><strong>Product Quality Engineering & Software Testing</strong></p>
 </div>
@@ -8,8 +8,6 @@
 ---
 
 Testify is a premium software testing and quality engineering consulting platform. We help product-led companies launch reliable, scalable, and high-quality software through expert QA testing, project management, process setup, and coaching.
-
-![Hero Section Preview](https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80)
 
 ## 🚀 Features
 
